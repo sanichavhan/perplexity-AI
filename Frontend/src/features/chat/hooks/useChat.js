@@ -1,6 +1,6 @@
 import { initializeSocketConnection } from "../service/chat.socket";
-import { sendMessage, getChats, getMessages, deleteChat } from "../service/chat.api";
-import { setChats, setCurrentChatId, setError, setLoading, createNewChat, addNewMessage, addMessages } from "../chat.slice";
+import { sendMessageStream, getChats, getMessages, deleteChat } from "../service/chat.api";
+import { setChats, setCurrentChatId, setError, setLoading, createNewChat, addNewMessage, addMessages, updateLastMessage } from "../chat.slice";
 import { useDispatch } from "react-redux";
 
 
@@ -10,25 +10,42 @@ export const useChat = () => {
 
 
     async function handleSendMessage({ message, chatId }) {
-        dispatch(setLoading(true))
-        const data = await sendMessage({ message, chatId })
-        const { chat, aiMessage } = data
-        if (!chatId)
-            dispatch(createNewChat({
-                chatId: chat._id,
-                title: chat.title,
-            }))
-        dispatch(addNewMessage({
-            chatId: chatId || chat._id,
-            content: message,
-            role: "user",
-        }))
-        dispatch(addNewMessage({
-            chatId: chatId || chat._id,
-            content: aiMessage.content,
-            role: aiMessage.role,
-        }))
-        dispatch(setCurrentChatId(chat._id))
+        dispatch(setLoading(true));
+        
+        await sendMessageStream({
+            message,
+            chatId,
+            onStart: (newChatId, title) => {
+                dispatch(setLoading(false));
+                if (!chatId) {
+                    dispatch(createNewChat({
+                        chatId: newChatId,
+                        title: title,
+                    }));
+                }
+                const actualChatId = chatId || newChatId;
+                dispatch(setCurrentChatId(actualChatId));
+                dispatch(addNewMessage({
+                    chatId: actualChatId,
+                    content: message,
+                    role: "user",
+                }));
+                dispatch(addNewMessage({
+                    chatId: actualChatId,
+                    content: "",
+                    role: "ai",
+                }));
+            },
+            onChunk: (chunk, newChatId) => {
+                dispatch(updateLastMessage({
+                    chatId: chatId || newChatId,
+                    content: chunk,
+                }));
+            },
+            onDone: () => {
+                dispatch(setLoading(false));
+            }
+        });
     }
 
     async function handleGetChats() {

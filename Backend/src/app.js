@@ -16,6 +16,7 @@ app.use(cors({
     origin: "http://localhost:5173",
     credentials: true,
     methods: [ "GET", "POST", "PUT", "DELETE" ],
+    exposedHeaders: [ "x-chat-id", "x-chat-title" ],
 }))
 
 // Health check

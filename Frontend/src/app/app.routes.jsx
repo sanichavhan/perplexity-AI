@@ -4,11 +4,13 @@ import Register from "../features/auth/pages/Register";
 import Dashboard from "../features/chat/pages/Dashboard";
 import Protected from "../features/auth/components/Protected";
 import { Navigate } from "react-router";
+import AppErrorBoundary from "./AppErrorBoundary";
 
 export const router = createBrowserRouter([
     {
         path: "/",
-        element: <Login />
+        element: <Login />,
+        errorElement: <AppErrorBoundary />
     },
     {
         path: "/login",

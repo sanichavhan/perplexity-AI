@@ -6,9 +6,34 @@ const api = axios.create({
 })
 
 
-export const sendMessage = async ({ message, chatId }) => {
-    const response = await api.post("/api/chats/message", { message, chat: chatId })
-    return response.data
+export const sendMessageStream = async ({ message, chatId, onStart, onChunk, onDone }) => {
+    const response = await fetch("http://localhost:3000/api/chats/message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        credentials: "include",
+        body: JSON.stringify({ message, chat: chatId }),
+    });
+
+    const newChatId = response.headers.get("x-chat-id");
+    let newChatTitle = response.headers.get("x-chat-title");
+    if (newChatTitle) newChatTitle = decodeURIComponent(newChatTitle);
+
+    if (onStart) onStart(newChatId, newChatTitle);
+
+    if (!response.body) throw new Error("No response body");
+
+    const reader = response.body.getReader();
+    const decoder = new TextDecoder();
+    
+    while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        const chunk = decoder.decode(value, { stream: true });
+        if (onChunk) onChunk(chunk, newChatId);
+    }
+    
+    if (onDone) onDone(newChatId, newChatTitle);
+    return { newChatId, title: newChatTitle };
 }
 
 export const getChats = async () => {

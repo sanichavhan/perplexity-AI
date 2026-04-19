@@ -73,9 +73,11 @@ body {
   width: 4px;
   height: 4px;
 }
+
 .custom-scrollbar::-webkit-scrollbar-track {
   background: transparent;
 }
+
 .custom-scrollbar::-webkit-scrollbar-thumb {
   background: #353535;
   border-radius: 10px;
@@ -83,5 +85,5 @@ body {
 
 /* Hide scrollbar for messages if needed */
 .messages::-webkit-scrollbar {
-    display: none;
+  display: none;
 }
