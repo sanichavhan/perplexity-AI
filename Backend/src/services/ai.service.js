@@ -81,11 +81,19 @@ export function generateResponseStream(messages, onFinishCallback) {
         messages: aiMessages,
         tools: {
             searchInternet: vercelTool({
-                description: "Use this tool to get the latest information from the internet.",
-                parameters: z.object({ query: z.string().describe("The search query to look up on the internet.") }),
+                description: "Search the internet for the most up-to-date and relevant information.",
+                parameters: z.object({
+                    query: z.string().describe("The specific search query to look up.")
+                }),
                 execute: async ({ query }) => {
-                    const result = await searchInternet({ query });
-                    return result;
+                    console.log(`[AI TOOL] searchInternet called with query: "${query}"`);
+                    try {
+                        const result = await searchInternet({ query });
+                        return result;
+                    } catch (error) {
+                        console.error(`[AI TOOL ERROR] searchInternet failed:`, error);
+                        return { error: "Search failed. Please try again or answer based on general knowledge." };
+                    }
                 }
             })
         },

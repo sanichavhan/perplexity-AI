@@ -36,9 +36,12 @@ const Register = () => {
                 
                 {/* Branding Section */}
                 <div className="mb-16 text-center z-10 mt-10">
-                    <h1 className="text-white font-black tracking-[0.4em] text-2xl md:text-3xl uppercase font-headline">
-                        REGISTER
+                    <h1 className="text-white font-black tracking-[0.2em] text-3xl font-headline italic">
+                        NovaAI
                     </h1>
+                    <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
+                        Join the Intelligence
+                    </p>
                     {/* <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
                         Agent Onboarding Protocol
                     </p> */}
@@ -124,7 +127,7 @@ const Register = () => {
                 <div className="absolute bottom-10 text-center w-full">
                     <div className="flex items-center justify-center gap-4 opacity-20">
                         <div className="h-[1px] w-8 bg-[#839493]"></div>
-                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#839493]">Secure Onboarding</span>
+                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#839493]">NovaAI Secure Onboarding</span>
                         <div className="h-[1px] w-8 bg-[#839493]"></div>
                     </div>
                 </div>

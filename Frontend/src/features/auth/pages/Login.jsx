@@ -43,9 +43,12 @@ const Login = () => {
                 
                 {/* Branding Section */}
                 <div className="mb-16 text-center z-10 mt-10">
-                    <h1 className="text-white font-black tracking-[0.4em] text-2xl md:text-3xl uppercase font-headline">
-                        LOGIN
+                    <h1 className="text-white font-black tracking-[0.2em] text-3xl font-headline italic">
+                        NovaAI
                     </h1>
+                    <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
+                        Intelligence Curated
+                    </p>
                     {/* <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
                         Institutional Access Protocol
                     </p> */}
@@ -112,7 +115,7 @@ const Login = () => {
                                 </p>
                                 <div className="mt-4">
                                     <Link to="/register" className="text-[#00dddd] text-xs font-bold uppercase tracking-widest hover:underline decoration-1 underline-offset-4 transition-all">
-                                        Register New Dossier
+                                        Join NovaAI Community
                                     </Link>
                                 </div>
                             </div>
@@ -124,7 +127,7 @@ const Login = () => {
                 <div className="absolute bottom-10 text-center w-full">
                     <div className="flex items-center justify-center gap-4 opacity-20">
                         <div className="h-[1px] w-8 bg-[#839493]"></div>
-                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#839493]">Terminal 004-X</span>
+                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#839493]">NovaAI Network</span>
                         <div className="h-[1px] w-8 bg-[#839493]"></div>
                     </div>
                 </div>

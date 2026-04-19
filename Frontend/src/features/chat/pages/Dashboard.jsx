@@ -161,7 +161,7 @@ const Dashboard = () => {
                       </div>
                       <div className="flex-1 text-[15px] leading-relaxed text-gray-200 mt-0.5 space-y-4">
                         {msg.content === "" ? (
-                           <div className="w-3 h-4 bg-gray-400 animate-pulse rounded-sm mt-1"></div>
+                           <div className="w-3 h-4 bg-red-500/50 animate-pulse rounded-sm mt-1" title="NovaAI is taking longer than usual..."></div>
                         ) : (
                           <div className="prose prose-invert prose-p:leading-relaxed prose-pre:bg-black prose-pre:border prose-pre:border-gray-800 prose-pre:rounded-xl prose-pre:my-4 prose-code:text-gray-200 max-w-none">
                             <ReactMarkdown
@@ -203,7 +203,7 @@ const Dashboard = () => {
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={handleKeyDown}
-                    placeholder="Message ChatGPT..."
+                    placeholder="Message NovaAI..."
                     rows={1}
                     className="flex-1 max-h-[200px] bg-transparent border-0 text-white placeholder-gray-400 resize-none outline-none py-3 px-2 text-[15px] m-0 custom-scrollbar leading-relaxed"
                  />
