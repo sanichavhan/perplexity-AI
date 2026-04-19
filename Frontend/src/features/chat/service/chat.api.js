@@ -1,13 +1,13 @@
 import axios from "axios";
 
 const api = axios.create({
-    baseURL: "http://localhost:3000",
+    baseURL: import.meta.env.VITE_API_BASE_URL,
     withCredentials: true,
 })
 
 
 export const sendMessageStream = async ({ message, chatId, onStart, onChunk, onDone }) => {
-    const response = await fetch("http://localhost:3000/api/chats/message", {
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/chats/message`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         credentials: "include",
