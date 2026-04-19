@@ -1,11 +1,10 @@
 import jwt from "jsonwebtoken";
+import blacklistTokenModel from "../models/blacklistToken.model.js";
 
 
+export async function authUser(req, res, next) {
 
-
-export function authUser(req, res, next) {
-
-    const token = req.cookies.token;
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ];
 
     if (!token) {
         return res.status(401).json({
@@ -13,6 +12,16 @@ export function authUser(req, res, next) {
             success: false,
             err: "No token provided"
         })
+    }
+
+    const isBlacklisted = await blacklistTokenModel.findOne({ token });
+
+    if (isBlacklisted) {
+        res.clearCookie("token");
+        return res.status(401).json({
+            message: "Unauthorized - Token blacklisted",
+            success: false
+        });
     }
 
     try {

@@ -1,5 +1,27 @@
 import userModel from "../models/user.model.js";
+import blacklistTokenModel from "../models/blacklistToken.model.js";
 import jwt from "jsonwebtoken";
+
+
+/**
+ * @desc Logout user and blacklist token
+ * @route GET /api/auth/logout
+ * @access Private
+ */
+export async function logout(req, res) {
+    const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ];
+
+    if (token) {
+        await blacklistTokenModel.create({ token });
+    }
+
+    res.clearCookie("token");
+
+    res.status(200).json({
+        message: "Logout successful",
+        success: true
+    });
+}
 
 
 /**

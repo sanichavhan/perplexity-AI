@@ -1,16 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useSelector } from 'react-redux'
+import { useNavigate } from 'react-router'
 import { useChat } from '../hooks/useChat'
+import { useAuth } from '../../auth/hook/useAuth'
 import remarkGfm from 'remark-gfm'
 
 const Dashboard = () => {
   const chat = useChat()
+  const { handleLogout } = useAuth()
+  const navigate = useNavigate()
+  
   const [chatInput, setChatInput] = useState('')
+  const [isLogoutVisible, setIsLogoutVisible] = useState(false)
+  
   const chats = useSelector((state) => state.chat.chats)
   const currentChatId = useSelector((state) => state.chat.currentChatId)
   const authUser = useSelector((state) => state.auth.user)
   const messagesEndRef = useRef(null)
+
+  const onLogout = async () => {
+    const success = await handleLogout()
+    if (success) {
+      navigate('/login')
+    }
+  }
 
   useEffect(() => {
     chat.initializeSocketConnection()
@@ -88,12 +102,27 @@ const Dashboard = () => {
         </div>
 
         {/* User Profile Area */}
-        <div className="p-3 border-t border-white/10">
-          <button className="flex items-center gap-3 w-full p-2 rounded-lg hover:bg-[#2A2B32] transition-colors cursor-pointer text-sm font-medium">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-blue-500 flex items-center justify-center text-white font-bold uppercase shrink-0">
+        <div className="p-3 border-t border-white/10 relative">
+          {isLogoutVisible && (
+            <div className="absolute bottom-full left-3 right-3 mb-2 p-1 bg-[#252525] border border-white/10 rounded-lg shadow-2xl z-50 animate-in fade-in slide-in-from-bottom-2 duration-200">
+              <button
+                onClick={onLogout}
+                className="w-full flex items-center gap-3 px-3 py-2 rounded-md text-sm text-red-400 hover:bg-red-400/10 transition-colors cursor-pointer group"
+              >
+                <span className="material-symbols-outlined text-sm group-hover:scale-110 transition-transform">logout</span>
+                <span className="font-bold tracking-tight">LOGOUT</span>
+              </button>
+            </div>
+          )}
+          <button 
+            onClick={() => setIsLogoutVisible(!isLogoutVisible)}
+            className={`flex items-center gap-3 w-full p-2 rounded-lg transition-all cursor-pointer text-sm font-medium ${isLogoutVisible ? 'bg-[#2A2B32]' : 'hover:bg-[#2A2B32]'}`}
+          >
+            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#00fbfb] to-[#035252] flex items-center justify-center text-[#003737] font-black text-xs shrink-0 shadow-lg shadow-[#00fbfb]/10 uppercase">
                {authUser?.username?.charAt(0) || "U"}
             </div>
-            <span className="truncate text-gray-200">{authUser?.username || "Upgrade Plan"}</span>
+            <span className="truncate text-gray-200 flex-1 text-left font-medium tracking-tight">{authUser?.username || "Researcher"}</span>
+            <span className={`material-symbols-outlined text-xs text-gray-400 transition-transform duration-300 ${isLogoutVisible ? 'rotate-180' : ''}`}>expand_less</span>
           </button>
         </div>
       </aside>
