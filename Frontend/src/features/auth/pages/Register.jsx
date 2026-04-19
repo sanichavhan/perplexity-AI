@@ -28,18 +28,18 @@ const Register = () => {
     }
 
     return (
-        <section className="bg-[#131313] text-[#e2e2e2] flex flex-col min-h-screen font-body selection:bg-[#00fbfb] selection:text-[#007070]">
+        <section className="bg-background text-on-surface flex flex-col min-h-screen font-body selection:bg-primary-container selection:text-on-primary-container transition-colors duration-500">
             <main className="flex-grow flex flex-col items-center justify-center px-8 relative overflow-hidden">
                 {/* Aesthetic Background Elements */}
-                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-[#035252] opacity-10 blur-[120px] rounded-full pointer-events-none"></div>
-                <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-[#00fbfb] opacity-5 blur-[100px] rounded-full pointer-events-none"></div>
+                <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-secondary-container opacity-10 blur-[120px] rounded-full pointer-events-none transition-colors duration-500"></div>
+                <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary-container opacity-5 blur-[100px] rounded-full pointer-events-none transition-colors duration-500"></div>
                 
                 {/* Branding Section */}
                 <div className="mb-16 text-center z-10 mt-10">
-                    <h1 className="text-white font-black tracking-[0.2em] text-3xl font-headline italic">
+                    <h1 className="text-on-surface font-black tracking-[0.2em] text-3xl font-headline italic">
                         NovaAI
                     </h1>
-                    <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
+                    <p className="text-on-surface-variant text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
                         Join the Intelligence
                     </p>
                     {/* <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
@@ -52,16 +52,16 @@ const Register = () => {
                     <form onSubmit={submitForm} className="space-y-6">
                         {/* Username Field */}
                         <div className="space-y-2">
-                            <label htmlFor="username" className="text-[0.6875rem] uppercase tracking-widest text-[#839493] ml-1 font-bold">USERNAME</label>
-                            <div className="bg-[#1f1f1f] h-14 flex items-center px-4 rounded-lg group focus-within:ring-1 focus-within:ring-[#00fbfb]/50 transition-all">
-                                <span className="material-symbols-outlined text-[#839493] mr-3 text-lg group-focus-within:text-[#00fbfb]">badge</span>
+                            <label htmlFor="username" className="text-[0.6875rem] uppercase tracking-widest text-on-surface-variant ml-1 font-bold">USERNAME</label>
+                            <div className="bg-surface h-14 flex items-center px-4 rounded-lg group border border-outline focus-within:ring-1 focus-within:ring-primary-container/50 transition-all shadow-sm">
+                                <span className="material-symbols-outlined text-on-surface-variant mr-3 text-lg group-focus-within:text-primary-container">badge</span>
                                 <input 
                                     id="username"
                                     type="text"
                                     value={username}
                                     onChange={(event) => setUsername(event.target.value)}
                                     required
-                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-[#353535] placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-white" 
+                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="PUBLIC ALIAS" 
                                 />
                             </div>
@@ -69,16 +69,16 @@ const Register = () => {
 
                         {/* Email Field */}
                         <div className="space-y-2">
-                            <label htmlFor="email" className="text-[0.6875rem] uppercase tracking-widest text-[#839493] ml-1 font-bold">EMAIL</label>
-                            <div className="bg-[#1f1f1f] h-14 flex items-center px-4 rounded-lg group focus-within:ring-1 focus-within:ring-[#00fbfb]/50 transition-all">
-                                <span className="material-symbols-outlined text-[#839493] mr-3 text-lg group-focus-within:text-[#00fbfb]">alternate_email</span>
+                            <label htmlFor="email" className="text-[0.6875rem] uppercase tracking-widest text-on-surface-variant ml-1 font-bold">EMAIL</label>
+                            <div className="bg-surface h-14 flex items-center px-4 rounded-lg group border border-outline focus-within:ring-1 focus-within:ring-primary-container/50 transition-all shadow-sm">
+                                <span className="material-symbols-outlined text-on-surface-variant mr-3 text-lg group-focus-within:text-primary-container">alternate_email</span>
                                 <input 
                                     id="email"
                                     type="email"
                                     value={email}
                                     onChange={(event) => setEmail(event.target.value)}
                                     required
-                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-[#353535] placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-white" 
+                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="EMAIL ADDRESS" 
                                 />
                             </div>
@@ -86,16 +86,16 @@ const Register = () => {
 
                         {/* Password Field */}
                         <div className="space-y-2">
-                            <label htmlFor="password" className="text-[0.6875rem] uppercase tracking-widest text-[#839493] ml-1 font-bold">PASSWORD</label>
-                            <div className="bg-[#1f1f1f] h-14 flex items-center px-4 rounded-lg group focus-within:ring-1 focus-within:ring-[#00fbfb]/50 transition-all">
-                                <span className="material-symbols-outlined text-[#839493] mr-3 text-lg group-focus-within:text-[#00fbfb]">fingerprint</span>
+                            <label htmlFor="password" className="text-[0.6875rem] uppercase tracking-widest text-on-surface-variant ml-1 font-bold">PASSWORD</label>
+                            <div className="bg-surface h-14 flex items-center px-4 rounded-lg group border border-outline focus-within:ring-1 focus-within:ring-primary-container/50 transition-all shadow-sm">
+                                <span className="material-symbols-outlined text-on-surface-variant mr-3 text-lg group-focus-within:text-primary-container">fingerprint</span>
                                 <input 
                                     id="password"
                                     type="password"
                                     value={password}
                                     onChange={(event) => setPassword(event.target.value)}
                                     required
-                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-[#353535] placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-white" 
+                                    className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="CREATE PASSWORD" 
                                 />
                             </div>
@@ -106,7 +106,7 @@ const Register = () => {
                             <button 
                                 type="submit"
                                 disabled={loading}
-                                className="w-full h-14 bg-[#00fbfb] text-[#003737] font-black uppercase tracking-[0.15em] text-sm rounded-lg active:scale-[0.98] transition-all hover:bg-white disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer"
+                                className="w-full h-14 bg-primary-container text-on-primary-container font-black uppercase tracking-[0.15em] text-sm rounded-lg active:scale-[0.98] transition-all hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer shadow-lg shadow-primary-container/20"
                             >
                                 <span>Create Account</span>
                                 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">add_circle</span>
@@ -114,7 +114,7 @@ const Register = () => {
                             
                             <div className="text-center">
                                 <div className="mt-4">
-                                    <Link to="/login" className="text-[#00dddd] text-xs font-bold uppercase tracking-widest hover:underline decoration-1 underline-offset-4 transition-all">
+                                    <Link to="/login" className="text-primary-container text-xs font-bold uppercase tracking-widest hover:underline decoration-1 underline-offset-4 transition-all">
                                         Already Registered? Login
                                     </Link>
                                 </div>
@@ -126,20 +126,20 @@ const Register = () => {
                 {/* Footer Metadata */}
                 <div className="absolute bottom-10 text-center w-full">
                     <div className="flex items-center justify-center gap-4 opacity-20">
-                        <div className="h-[1px] w-8 bg-[#839493]"></div>
-                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-[#839493]">NovaAI Secure Onboarding</span>
-                        <div className="h-[1px] w-8 bg-[#839493]"></div>
+                        <div className="h-[1px] w-8 bg-on-surface-variant"></div>
+                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-on-surface-variant">NovaAI Secure Onboarding</span>
+                        <div className="h-[1px] w-8 bg-on-surface-variant"></div>
                     </div>
                 </div>
             </main>
 
             {/* Illustration Component */}
             <div className="hidden lg:block absolute left-20 top-1/2 -translate-y-1/2 w-96 h-96 opacity-10 pointer-events-none">
-                <div className="relative w-full h-full text-[#839493]">
+                <div className="relative w-full h-full text-on-surface-variant">
                     <div className="absolute inset-0 border border-current opacity-20 -rotate-45"></div>
                     <div className="absolute inset-4 border border-current opacity-10 rotate-12"></div>
-                    <div className="absolute inset-10 border border-[#00fbfb] opacity-20 -rotate-90"></div>
-                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-[#00fbfb] rounded-full animate-pulse"></div>
+                    <div className="absolute inset-10 border border-primary-container opacity-20 -rotate-90"></div>
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-4 h-4 bg-primary-container rounded-full animate-pulse shadow-lg shadow-primary-container/50"></div>
                 </div>
             </div>
         </section>
