@@ -1,7 +1,8 @@
 import userModel from "../models/user.model.js";
 import blacklistTokenModel from "../models/blacklistToken.model.js";
 import jwt from "jsonwebtoken";
-
+import dotenv from "dotenv";
+dotenv.config();
 
 /**
  * @desc Logout user and blacklist token
@@ -53,7 +54,14 @@ export async function register(req, res) {
         username: user.username,
     }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-    res.cookie("token", token)
+    const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    };
+
+    res.cookie("token", token, cookieOptions)
 
     res.status(201).json({
         message: "User registered successfully",
@@ -100,7 +108,14 @@ export async function login(req, res) {
         username: user.username,
     }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
-    res.cookie("token", token)
+    const cookieOptions = {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+    };
+
+    res.cookie("token", token, cookieOptions)
 
     res.status(200).json({
         message: "Login successful",
@@ -170,11 +185,13 @@ export async function verifyEmail(req, res) {
 
         await user.save();
 
+        const loginUrl = `${process.env.FRONTEND_URL || "http://localhost:5173"}/login`;
+
         const html =
             `
         <h1>Email Verified Successfully!</h1>
         <p>Your email has been verified. You can now log in to your account.</p>
-        <a href="http://localhost:3000/login">Go to Login</a>
+        <a href="${loginUrl}">Go to Login</a>
     `
 
         return res.send(html);
