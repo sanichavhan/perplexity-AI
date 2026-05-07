@@ -21,6 +21,7 @@ const Dashboard = () => {
   const currentChatId = useSelector((state) => state.chat.currentChatId)
   const authUser = useSelector((state) => state.auth.user)
   const messagesEndRef = useRef(null)
+  const textareaRef = useRef(null)
 
   const onLogout = async () => {
     const success = await handleLogout()
@@ -65,6 +66,11 @@ const Dashboard = () => {
   }
 
   const activeTitle = chats[currentChatId]?.title
+
+  const handleSuggestionClick = (suggestion) => {
+    setChatInput(suggestion)
+    textareaRef.current?.focus()
+  }
 
   return (
     <div className="flex h-screen overflow-hidden bg-background text-on-surface font-sans">
@@ -157,20 +163,32 @@ const Dashboard = () => {
                 <h1 className="text-2xl font-semibold mb-8">How can I help you today?</h1>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-3 w-full max-w-2xl px-4">
-                   <button className="flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group">
-                      <span className="font-semibold text-on-surface group-hover:text-primary-container transition-colors">Explain quantum computing</span>
+                   <button 
+                      onClick={() => handleSuggestionClick("Explain quantum computing to a high school student")}
+                      className="cursor-pointer flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group"
+                   >
+                      <span className="cursor-pointer font-semibold text-on-surface group-hover:text-primary-container transition-colors">Explain quantum computing</span>
                       <span className="opacity-80">to a high school student</span>
                    </button>
-                   <button className="flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group">
-                      <span className="font-semibold text-on-surface group-hover:text-primary-container transition-colors">Write a clean React component</span>
+                   <button 
+                      onClick={() => handleSuggestionClick("Write a clean React component using standard Tailwind CSS")}
+                      className="cursor-pointer flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group"
+                   >
+                      <span className="cursor-pointer font-semibold text-on-surface group-hover:text-primary-container transition-colors">Write a clean React component</span>
                       <span className="opacity-80">using standard Tailwind CSS</span>
                    </button>
-                   <button className="hidden md:flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group">
-                      <span className="font-semibold text-on-surface group-hover:text-primary-container transition-colors">Brainstorm project ideas</span>
+                   <button 
+                      onClick={() => handleSuggestionClick("Brainstorm project ideas for an AI startup")}
+                      className="cursor-pointer hidden md:flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group"
+                   >
+                      <span className="cursor-pointer font-semibold text-on-surface group-hover:text-primary-container transition-colors">Brainstorm project ideas</span>
                       <span className="opacity-80">for an AI startup</span>
                    </button>
-                   <button className="hidden md:flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group">
-                      <span className="font-semibold text-on-surface group-hover:text-primary-container transition-colors">Draft an impressive email</span>
+                   <button 
+                      onClick={() => handleSuggestionClick("Draft an impressive email inviting a speaker to a tech event")}
+                      className="cursor-pointer hidden md:flex flex-col text-left py-3 px-4 border border-outline rounded-xl hover:bg-surface-container text-sm text-on-surface-variant group"
+                   >
+                      <span className="cursor-pointer font-semibold text-on-surface group-hover:text-primary-container transition-colors">Draft an impressive email</span>
                       <span className="opacity-80">inviting a speaker to a tech event</span>
                    </button>
                 </div>
@@ -232,6 +250,7 @@ const Dashboard = () => {
                  </button>
                  
                  <textarea
+                    ref={textareaRef}
                     value={chatInput}
                     onChange={(e) => setChatInput(e.target.value)}
                     onKeyDown={handleKeyDown}
