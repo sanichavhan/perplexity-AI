@@ -1,7 +1,9 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { useAuth } from '../hook/useAuth'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
+import { setError } from '../auth.slice'
+import { useEffect } from 'react'
 
 const Register = () => {
     const [username, setUsername] = useState('')
@@ -10,7 +12,15 @@ const Register = () => {
 
     const { handleRegister } = useAuth()
     const loading = useSelector(state => state.auth.loading)
+    const error = useSelector(state => state.auth.error)
     const navigate = useNavigate()
+    const dispatch = useDispatch()
+
+    useEffect(() => {
+        // Clear error on mount/unmount
+        dispatch(setError(null))
+        return () => dispatch(setError(null))
+    }, [ dispatch ])
 
     const submitForm = async (event) => {
         event.preventDefault()
@@ -30,6 +40,12 @@ const Register = () => {
     return (
         <section className="bg-background text-on-surface flex flex-col min-h-screen font-body selection:bg-primary-container selection:text-on-primary-container transition-colors duration-500">
             <main className="flex-grow flex flex-col items-center justify-center px-8 relative overflow-hidden">
+                {error && (
+                    <div className="w-full max-w-sm mb-8 bg-error/10 border border-error/20 text-error text-[0.7rem] px-4 py-3 rounded-lg flex items-center gap-3 animate-in fade-in slide-in-from-top-2 backdrop-blur-sm z-20">
+                        <span className="material-symbols-outlined text-sm">warning</span>
+                        <span className="font-bold tracking-wider uppercase">{error}</span>
+                    </div>
+                )}
                 {/* Aesthetic Background Elements */}
                 <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-secondary-container opacity-10 blur-[120px] rounded-full pointer-events-none transition-colors duration-500"></div>
                 <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-primary-container opacity-5 blur-[100px] rounded-full pointer-events-none transition-colors duration-500"></div>
@@ -59,7 +75,10 @@ const Register = () => {
                                     id="username"
                                     type="text"
                                     value={username}
-                                    onChange={(event) => setUsername(event.target.value)}
+                                    onChange={(event) => {
+                                        setUsername(event.target.value)
+                                        if (error) dispatch(setError(null))
+                                    }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="PUBLIC ALIAS" 
@@ -76,7 +95,10 @@ const Register = () => {
                                     id="email"
                                     type="email"
                                     value={email}
-                                    onChange={(event) => setEmail(event.target.value)}
+                                    onChange={(event) => {
+                                        setEmail(event.target.value)
+                                        if (error) dispatch(setError(null))
+                                    }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="EMAIL ADDRESS" 
@@ -93,7 +115,10 @@ const Register = () => {
                                     id="password"
                                     type="password"
                                     value={password}
-                                    onChange={(event) => setPassword(event.target.value)}
+                                    onChange={(event) => {
+                                        setPassword(event.target.value)
+                                        if (error) dispatch(setError(null))
+                                    }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
                                     placeholder="CREATE PASSWORD" 

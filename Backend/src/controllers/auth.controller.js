@@ -10,18 +10,27 @@ dotenv.config();
  * @access Private
  */
 export async function logout(req, res) {
-    const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ];
+    try {
+        const token = req.cookies.token || req.headers.authorization?.split(" ")[ 1 ];
 
-    if (token) {
-        await blacklistTokenModel.create({ token });
+        if (token) {
+            await blacklistTokenModel.create({ token });
+        }
+
+        res.clearCookie("token");
+
+        res.status(200).json({
+            message: "Logout successful",
+            success: true
+        });
+    } catch (err) {
+        console.error("Logout Error:", err);
+        res.status(500).json({
+            message: "An error occurred during logout",
+            success: false,
+            err: err.message
+        });
     }
-
-    res.clearCookie("token");
-
-    res.status(200).json({
-        message: "Logout successful",
-        success: true
-    });
 }
 
 
@@ -32,46 +41,54 @@ export async function logout(req, res) {
  * @body { username, email, password }
  */
 export async function register(req, res) {
+    try {
+        const { username, email, password } = req.body;
 
-    const { username, email, password } = req.body;
-
-    const isUserAlreadyExists = await userModel.findOne({
-        $or: [ { email }, { username } ]
-    })
-
-    if (isUserAlreadyExists) {
-        return res.status(400).json({
-            message: "User with this email or username already exists",
-            success: false,
-            err: "User already exists"
+        const isUserAlreadyExists = await userModel.findOne({
+            $or: [ { email }, { username } ]
         })
-    }
 
-    const user = await userModel.create({ username, email, password })
+        if (isUserAlreadyExists) {
+            return res.status(400).json({
+                message: "User with this email or username already exists",
+                success: false,
+                err: "User already exists"
+            })
+        }
 
-    const token = jwt.sign({
-        id: user._id,
-        username: user.username,
-    }, process.env.JWT_SECRET, { expiresIn: '7d' })
+        const user = await userModel.create({ username, email, password })
 
-    const cookieOptions = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    };
-
-    res.cookie("token", token, cookieOptions)
-
-    res.status(201).json({
-        message: "User registered successfully",
-        success: true,
-        user: {
+        const token = jwt.sign({
             id: user._id,
             username: user.username,
-            email: user.email
-        }
-    });
+        }, process.env.JWT_SECRET, { expiresIn: '7d' })
+
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        };
+
+        res.cookie("token", token, cookieOptions)
+
+        res.status(201).json({
+            message: "User registered successfully",
+            success: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        });
+    } catch (err) {
+        console.error("Registration Error:", err);
+        res.status(500).json({
+            message: "An error occurred during registration",
+            success: false,
+            err: err.message
+        });
+    }
 }
 
 /**
@@ -81,52 +98,60 @@ export async function register(req, res) {
  * @body { email, password }
  */
 export async function login(req, res) {
-    const { email, password } = req.body;
+    try {
+        const { email, password } = req.body;
 
-    const user = await userModel.findOne({ email })
+        const user = await userModel.findOne({ email })
 
-    if (!user) {
-        return res.status(400).json({
-            message: "Invalid email or password",
-            success: false,
-            err: "User not found"
-        })
-    }
+        if (!user) {
+            return res.status(400).json({
+                message: "Invalid email or password",
+                success: false,
+                err: "User not found"
+            })
+        }
 
-    const isPasswordMatch = await user.comparePassword(password);
+        const isPasswordMatch = await user.comparePassword(password);
 
-    if (!isPasswordMatch) {
-        return res.status(400).json({
-            message: "Invalid email or password",
-            success: false,
-            err: "Incorrect password"
-        })
-    }
+        if (!isPasswordMatch) {
+            return res.status(400).json({
+                message: "Invalid email or password",
+                success: false,
+                err: "Incorrect password"
+            })
+        }
 
-    const token = jwt.sign({
-        id: user._id,
-        username: user.username,
-    }, process.env.JWT_SECRET, { expiresIn: '7d' })
-
-    const cookieOptions = {
-        httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
-    };
-
-    res.cookie("token", token, cookieOptions)
-
-    res.status(200).json({
-        message: "Login successful",
-        success: true,
-        user: {
+        const token = jwt.sign({
             id: user._id,
             username: user.username,
-            email: user.email
-        }
-    })
+        }, process.env.JWT_SECRET, { expiresIn: '7d' })
 
+        const cookieOptions = {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === "production",
+            sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+            maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
+        };
+
+        res.cookie("token", token, cookieOptions)
+
+        res.status(200).json({
+            message: "Login successful",
+            success: true,
+            user: {
+                id: user._id,
+                username: user.username,
+                email: user.email
+            }
+        })
+    } catch (err) {
+        console.error("Login Error:", err);
+        res.status(500).json({
+            message: "An error occurred during login",
+            success: false,
+            err: err.message
+        });
+    }
 }
 
 
@@ -136,23 +161,32 @@ export async function login(req, res) {
  * @access Private
  */
 export async function getMe(req, res) {
-    const userId = req.user.id;
+    try {
+        const userId = req.user.id;
 
-    const user = await userModel.findById(userId).select("-password");
+        const user = await userModel.findById(userId).select("-password");
 
-    if (!user) {
-        return res.status(404).json({
-            message: "User not found",
-            success: false,
-            err: "User not found"
+        if (!user) {
+            return res.status(404).json({
+                message: "User not found",
+                success: false,
+                err: "User not found"
+            })
+        }
+
+        res.status(200).json({
+            message: "User details fetched successfully",
+            success: true,
+            user
         })
+    } catch (err) {
+        console.error("Get Me Error:", err);
+        res.status(500).json({
+            message: "An error occurred fetching user details",
+            success: false,
+            err: err.message
+        });
     }
-
-    res.status(200).json({
-        message: "User details fetched successfully",
-        success: true,
-        user
-    })
 }
 
 
