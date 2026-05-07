@@ -86,13 +86,13 @@ const Dashboard = () => {
         <div className="flex-1 overflow-y-auto custom-scrollbar px-3 py-2">
           {Object.keys(chats).length > 0 && (
             <div className="mb-6">
-              <h3 className="text-xs font-semibold text-gray-500 px-2 pb-2 mb-1">Recent</h3>
-              <div className="space-y-0.5">
+              <h3 className="text-[16px] text-center font-semibold text-gray-500 px-2 pb-2 mb-1 ">Recent</h3>
+              <div className="space-y-0.5 cursor-pointer">
                 {Object.values(chats).map((c, index) => (
                   <button
                     key={c.id || index}
                     onClick={() => openChat(c.id)}
-                    className={`w-full text-left flex items-center gap-3 py-2 px-2.5 rounded-lg transition-colors text-sm truncate ${
+                    className={`cursor-pointer w-full text-left flex items-center gap-3 py-2 px-2.5 rounded-lg transition-colors text-sm truncate ${
                       currentChatId === c.id ? 'bg-surface-container text-on-surface' : 'text-on-surface-variant hover:bg-surface-container'
                     }`}
                   >
@@ -177,7 +177,7 @@ const Dashboard = () => {
             </div>
           ) : (
             // Chat History View
-            <div className="max-w-3xl mx-auto pt-6 pb-36 px-4">
+            <div className="max-w-3xl mx-auto pt-6 pb-36 px-4 ">
               {currentMessages.map((msg, index) => (
                 <div key={index} className={`flex w-full mb-6 ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
                   {msg.role === 'user' ? (
