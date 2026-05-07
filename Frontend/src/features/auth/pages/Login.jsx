@@ -48,7 +48,7 @@ const Login = () => {
     }
 
     return (
-        <section className="bg-background text-on-surface flex flex-col min-h-screen font-body selection:bg-primary-container selection:text-on-primary-container">
+        <section className="bg-background text-on-surface flex flex-col min-h-screen font-body">
             <main className="flex-grow flex flex-col items-center justify-center px-8 relative overflow-hidden">
                 {error && (
                     <div className="w-full max-w-sm mb-8 bg-error/10 border border-error/20 text-error text-[0.7rem] px-4 py-3 rounded-lg flex items-center gap-3 animate-in fade-in slide-in-from-top-2 backdrop-blur-sm z-20">
