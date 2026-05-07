@@ -81,7 +81,7 @@ const Register = () => {
                                     }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
-                                    placeholder="PUBLIC ALIAS" 
+                                    placeholder="USERNAME" 
                                 />
                             </div>
                         </div>
@@ -101,7 +101,7 @@ const Register = () => {
                                     }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
-                                    placeholder="EMAIL ADDRESS" 
+                                    placeholder="EMAIL" 
                                 />
                             </div>
                         </div>
@@ -121,7 +121,7 @@ const Register = () => {
                                     }}
                                     required
                                     className="bg-transparent border-none focus:ring-0 w-full text-sm font-medium tracking-tight placeholder:text-on-surface-variant/30 placeholder:text-[0.75rem] placeholder:tracking-widest outline-none text-on-surface" 
-                                    placeholder="CREATE PASSWORD" 
+                                    placeholder="PASSWORD" 
                                 />
                             </div>
                         </div>
@@ -133,7 +133,7 @@ const Register = () => {
                                 disabled={loading}
                                 className="w-full h-14 bg-primary-container text-on-primary-container font-black uppercase tracking-[0.15em] text-sm rounded-lg active:scale-[0.98] transition-all hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer shadow-lg shadow-primary-container/20"
                             >
-                                <span>Create Account</span>
+                                <span className="text-center text-gray-900">Create Account</span>
                                 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">add_circle</span>
                             </button>
                             

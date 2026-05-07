@@ -66,7 +66,7 @@ const Login = () => {
                         NovaAI
                     </h1>
                     <p className="text-on-surface-variant text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
-                        Intelligence Curated
+                        Join the Intelligence
                     </p>
                     {/* <p className="text-[#839493] text-[0.65rem] md:text-xs tracking-[0.2em] mt-4 uppercase opacity-60">
                         Institutional Access Protocol
@@ -116,33 +116,26 @@ const Login = () => {
                             </div>
                         </div>
 
-                        {/* Recovery Link */}
-                        <div className="flex justify-end">
-                            <button type="button" className="text-[0.6875rem] uppercase tracking-tighter text-on-surface-variant hover:text-primary-container transition-colors cursor-pointer">
-                                Forgotten Cipher?
-                            </button>
-                        </div>
-
                         {/* Action Section */}
                         <div className="space-y-8 pt-4">
                             <button 
                                 type="submit" 
                                 disabled={loading}
-                                className="w-full h-14 bg-primary-container text-on-primary-container font-black uppercase tracking-[0.15em] text-sm rounded-lg active:scale-[0.98] transition-all hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer shadow-lg shadow-primary-container/20"
+                                className="w-full h-14 bg-primary-container text-on-primary-container font-bold uppercase tracking-[0.15em] text-sm rounded-lg active:scale-[0.98] transition-all hover:brightness-110 disabled:opacity-50 flex items-center justify-center gap-2 group cursor-pointer shadow-lg shadow-primary-container/20"
                             >
-                                <span>LOGIN</span>
+                                <span className="text-gray-900">LOGIN</span>
                                 <span className="material-symbols-outlined text-lg group-hover:translate-x-1 transition-transform">arrow_forward</span>
                             </button>
                             
                             <div className="text-center">
-                                <p className="text-on-surface-variant text-xs tracking-tight">
+                                {/* <p className="text-on-surface-variant text-xs tracking-tight">
                                     Unauthorized access is strictly monitored.
-                                </p>
+                                </p> */}
                                 <div className="mt-4">
                                     <Link to="/register" className="text-primary-container text-xs font-bold uppercase tracking-widest hover:underline decoration-1 underline-offset-4 transition-all">
-                                        Join NovaAI Community
+                                        If You Haven't Created an Account Register Here
                                     </Link>
-                                </div>
+                                </div>  
                             </div>
                         </div>
                     </form>
@@ -152,7 +145,7 @@ const Login = () => {
                 <div className="absolute bottom-10 text-center w-full">
                     <div className="flex items-center justify-center gap-4 opacity-20">
                         <div className="h-[1px] w-8 bg-on-surface-variant"></div>
-                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-on-surface-variant">NovaAI Network</span>
+                        <span className="text-[0.6rem] uppercase tracking-[0.3em] text-on-surface-variant">Join the Intelligence</span>
                         <div className="h-[1px] w-8 bg-on-surface-variant"></div>
                     </div>
                 </div>
